@@ -75,4 +75,27 @@ public class ProdutoTest {
                 .body("message", equalTo("Produto adicionado com sucesso"))
                 .statusCode(201);
     }
+
+    @Test
+    @DisplayName("Validar que um produto é deletado")
+    public void testValidarProdutoPodeSerDeletado(){
+        int produtoId =
+        given()
+            .contentType(ContentType.JSON)
+            .header("token", this.token)
+            .body(ProdutoDataFactory.criarProdutoComumComValorIgualA(4000.00))
+        .when()
+            .post("/v2/produtos")
+        .then()
+            .extract()
+                .path("data.produtoId");
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("token", this.token)
+        .when()
+            .delete("/v2/produtos/" + produtoId)
+        .then()
+            .statusCode(204);
+    }
 }
