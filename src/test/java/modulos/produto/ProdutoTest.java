@@ -49,7 +49,6 @@ public class ProdutoTest {
     @Test
     @DisplayName("Validar que o valor do produto não pode ser maior do que R$ 7000.00")
     public void testValidarValorProdutoNaoPodeSerMaiorDoQue7Mil(){
-        //tentar inserir um produto com valor 7000.01
         given()
                 .contentType(ContentType.JSON)
                 .header("token", this.token)
@@ -60,5 +59,20 @@ public class ProdutoTest {
                 .assertThat()
                     .body("error", equalTo("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00"))
                     .statusCode(422);
+    }
+
+    @Test
+    @DisplayName("Validar que o produto é cadastrado com valor válido")
+    public void testValidarProdutoCastradoComValorValidoIgualA5mil(){
+        given()
+                .contentType(ContentType.JSON)
+                .header("token", this.token)
+                .body(ProdutoDataFactory.criarProdutoComumComValorIgualA(5000.00))
+        .when()
+                .post("/v2/produtos")
+        .then()
+            .assertThat()
+                .body("message", equalTo("Produto adicionado com sucesso"))
+                .statusCode(201);
     }
 }
