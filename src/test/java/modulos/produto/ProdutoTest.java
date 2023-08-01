@@ -40,9 +40,7 @@ public class ProdutoTest {
 
     @Test
     @DisplayName("Validar que o valor do produto não pode ser 0.00")
-    public void testValidarLimitesZeradoProibidoValorProduto(){
-
-        //tentar inserir um produto com valor 0.00
+    public void testValidarValorProdutoNaoPodeSerZero(){
         given()
             .contentType(ContentType.JSON)
             .header("token", this.token)
@@ -56,8 +54,8 @@ public class ProdutoTest {
     }
 
     @Test
-    @DisplayName("Validar que o valor do produto não pode ser maior do que  R$ 7000.01")
-    public void testValidarLimitesMaiorSeteMilProibidoValorProduto(){
+    @DisplayName("Validar que o valor do produto não pode ser maior do que R$ 7000.00")
+    public void testValidarValorProdutoNaoPodeSerMaiorDoQue7Mil(){
         //tentar inserir um produto com valor 7000.01
         given()
                 .contentType(ContentType.JSON)
